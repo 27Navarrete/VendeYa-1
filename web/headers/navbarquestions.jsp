@@ -25,7 +25,7 @@
                 </li>
                 <li class="nav-item active mr-2">
                     <a data-toggle="tooltip" data-placement="top" title="Vender" class="nav-link"
-                       href="#">Vender</a>
+                       href="../Vender/">Vender</a>
                 </li>
                 <li class="nav-item active mr-2">
                     <a data-toggle="tooltip" data-placement="top" title="Anuncios" class="nav-link"

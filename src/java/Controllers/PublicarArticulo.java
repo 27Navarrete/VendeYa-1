@@ -70,7 +70,7 @@ public class PublicarArticulo extends HttpServlet {
             CuentaDAO ctD = new CuentaDAO();
             Cuenta ct1 = new Cuenta();
             Cuenta ct2 = new Cuenta();
-             ct1 = ctD.LeerCuenta(user);
+            ct1 = ctD.LeerCuenta(user);
             ct2.setIdCuenta(ct1.getIdCuenta());
             
             pos.setCuenta(ct2);
@@ -80,10 +80,7 @@ public class PublicarArticulo extends HttpServlet {
             publicarArticulo pa = new publicarArticulo(pos);
             pa.CrearArticulo();
             pa.CrearPublicacion();
-            
-            
-            
-            
+
             
             out.println("<!DOCTYPE html>");
             out.println("<html>");

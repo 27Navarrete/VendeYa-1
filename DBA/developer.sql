@@ -38,23 +38,22 @@ foreign key(idCategoria)
 references Categorias(idCategoria)
 )engine=innoDB;
 
-create table Imagenes(
-idImagen int not null auto_increment,
-Imagen longtext not null,
-primary key(idImagen)
-)engine= innoDB;
-
 create table Productos(
 idProducto int not null auto_increment,
-idImagen int not null,
 nombre varchar(100) not null,
 precio decimal(5,2) not null,
 idSubCategoria int not null,
 primary key(idProducto),
 foreign key(idSubCategoria)
-references SubCategorias(idsubCategoria),
-foreign key(idImagen) references Imagenes(idImagen)
+references SubCategorias(idsubCategoria)
 )engine = innoDB;
+
+create table Productos_Imagenes(
+idProducto_Imagen int not null primary key auto_increment,
+idProducto int not null,
+Imagen varchar(100) not null,
+foreign key(idProducto) references Productos(idProducto)
+)engine=innodb;
 
 
 create table Publicaciones (
@@ -70,4 +69,5 @@ references Cuentas(idCuenta),
 foreign key(idProducto)
 references Productos(idProducto)
 )engine = innoDB;
+
 

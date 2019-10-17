@@ -20,6 +20,7 @@
     </head>
 
     <body>
+       
 
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -246,8 +247,6 @@
 
                                         <img src="https://icon-library.net/images/add-image-icon-png/add-image-icon-png-15.jpg"
                                              class="rounded mr-2 imgs" alt="..." id="img5" width="145px" height="145px">
-
-
 
                                         <button id="btn5" type="button" class="ml-2 mb-1 close align-self-start" 
                                                 aria-label="Close">

@@ -38,23 +38,17 @@ public class ValidarDatos extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String user = request.getParameter("user");
             String pass = request.getParameter("pass");
-            
-            Login login = new Login(user,pass);
-            
-            
-            
-            if(login.validarDatos() != null){
+
+            Login login = new Login(user, pass);
+
+            if (login.validarDatos() != null) {
                 HttpSession session = request.getSession();
                 session.setAttribute("usuario", login.getUsuario().getNombre());
                 session.setAttribute("idUsuario", login.getUsuario().getIdUsuario());
                 out.print(true);
-            }else{
+            } else {
                 out.print(false);
             }
-
-
-
-              
 
         }
     }

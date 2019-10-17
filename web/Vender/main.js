@@ -178,7 +178,7 @@ $('#btn1').click(function () {
 
 function updateImages() {
 
-    for (let i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
         if ((imagenes[0] || imagenes[1] || imagenes[2] || imagenes[3] || imagenes[4] || imagenes[5]) && locationUser.length > 0) {
             $('#publicar').removeClass('btn-secondary');
             $('#publicar').addClass('btn-primary');
@@ -286,38 +286,75 @@ function getInfo(e) {
 }
 
 /*Firebase*/
+// Your web app's Firebase configuration
 var firebaseConfig = {
-    apiKey: "AIzaSyDN32C77AHXC_IB4ZiKQ5QxjCYkjJbrxZ8",
-    authDomain: "fir-test-c8e57.firebaseapp.com",
-    databaseURL: "https://fir-test-c8e57.firebaseio.com",
-    projectId: "fir-test-c8e57",
-    storageBucket: "fir-test-c8e57.appspot.com",
-    messagingSenderId: "913283215184",
-    appId: "1:913283215184:web:fc1a4650b95d33d5e2c655"
+    apiKey: "AIzaSyDpLLTRh8XhyciqCy0QJYyUUYnalQLzSV8",
+    authDomain: "vendeya-a46cc.firebaseapp.com",
+    databaseURL: "https://vendeya-a46cc.firebaseio.com",
+    projectId: "vendeya-a46cc",
+    storageBucket: "vendeya-a46cc.appspot.com",
+    messagingSenderId: "693529839040",
+    appId: "1:693529839040:web:8bb0c03ee6fd497994b425",
+    measurementId: "G-X9L160JGL9"
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+
+
 $('#publicar').click(function () {
     var storage = firebase.storage();
-    var storageRef = storage.ref();
+    ///carpeta raiz
+    var storageRef = storage.ref('usuario/08/98/');
+    ///Ciclo para ingresar las imagenes
 
-// Create a reference to 'mountains.jpg'
-    var ref = storageRef.child('mountains.jpg');
-
-    ref.putString(imagenes[0], 'data_url').then(function (snapshot) {
-        console.log('Uploaded a data_url string!');
-    });
-
-    for (let i = 0; i < 6; i++) {
-        if (imagenes[i]){
-            
-        }else {
-            
+    for (var i = 0; i < imagenes.length; i++) {
+        ///verificamos si es null o no 
+        if (imagenes[i]) {
+            // Hijos adentro de la raiz
+            var ref = storageRef.child((i + 1) + '.jpg');
+            ref.putString(imagenes[i], 'data_url').then(function (snapshot) {
+                console.log('Uploaded a data_url string! ' + i);
+            });
+            ref.getDownloadURL().then(function (url) {
+                AgregarImagenes(url);
+            }).catch(function (error) {
+            });
+        } else {
+            console.log("imagen " + (i + 1) + " no ingresada");
         }
     }
+    ///Api fetch
+
+    ///EnviarDatos();
 
 });
+
+///variable para guardar urls de imagenes
+var Urls = [];
+///Funcion para agragar las urls a nuestro array
+function AgregarImagenes(url) {
+    Urls.push(url);
+    console.log(Urls[0]);
+}
+
+function EnviarDatos() {
+    var Titulo = document.getElementById("colFormLabelLg").value;
+    fetch("http://localhost:38258/VendeYa/PublicarArticulo?titulo=" + Titulo + "&precio=" + price.value + "&descripcion=" +
+            desc.value + "&idsubcategoria=" + idCategoria + "&location=" + locationUser + "&fotos[]=" + Urls[0] +
+            "&fotos[]=" + Urls[1] + "&fotos[]=" + Urls[2] + "&fotos[]=" + Urls[3] + "&fotos[]=" + Urls[4] + "&fotos[]=" + Urls[5]).then(function (res) {
+        return res.text();
+    }).then(function (data) {
+        /*if (data == "true") {
+         location.href = "http://localhost:38258/VendeYa";
+         } else {
+         document.getElementById("mensaje").innerHTML = "Datos incorrectos o no se encontro la cuenta";
+         }*/
+        location.href = "http://localhost:38258/VendeYa/PublicarArticulo?titulo=" + Titulo + "&precio=" + price.value + "&descripcion=" +
+                desc.value + "&idsubcategoria=" + idCategoria + "&location=" + locationUser + "&fotos[]=" + Urls[0] +
+                "&fotos[]=" + Urls[1] + "&fotos[]=" + Urls[2] + "&fotos[]=" + Urls[3] + "&fotos[]=" + Urls[4] + "&fotos[]=" + Urls[5];
+    });
+}
 
 
 
