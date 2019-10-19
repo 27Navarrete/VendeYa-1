@@ -7,12 +7,12 @@ var pass = document.getElementById("Password");
 btnIniciar.addEventListener("click", function (e) {
     e.preventDefault();
     
-        fetch("http://localhost:38258/VendeYa/ValidarDatos?user="+usuario.value+"&pass="+pass.value+""
+        fetch("http://localhost:8080/VendeYa/ValidarDatos?user="+usuario.value+"&pass="+pass.value+""
         ).then(function(res){
             return res.text();
         }).then(function(data){
               if(data == "true"){
-                    location.href = "http://localhost:38258/VendeYa";
+                    location.href = "http://localhost:8080/VendeYa";
                 }else{
                     document.getElementById("mensaje").innerHTML = "Datos incorrectos o no se encontro la cuenta";
                 }

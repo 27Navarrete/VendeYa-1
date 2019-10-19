@@ -20,7 +20,23 @@
     </head>
 
     <body>
-       
+        <div id="imagesURL">
+            <ul id="list">
+
+            </ul>
+        </div>
+        <div id="loading" class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border" role="status">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    Publicando Anuncio...
+                </div>
+            </div>
+        </div>
 
         <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
@@ -307,15 +323,15 @@
         <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-storage.js"></script>
         <jsp:include page="./header/javascript.jsp"/>
         <script type="text/javascript">
-            $('.carousel').carousel({
-                pause: true,
-                interval: false,
-                wrap: false
-            });
-            $('.toast').toast('show');
+                                    $('.carousel').carousel({
+                                        pause: true,
+                                        interval: false,
+                                        wrap: false
+                                    });
+                                    $('.toast').toast('show');
 
         </script>
-        
+
 
     </body>
 

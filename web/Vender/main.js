@@ -300,7 +300,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-
+var datas = [];
 
 $('#publicar').click(function () {
     var storage = firebase.storage();
@@ -310,51 +310,54 @@ $('#publicar').click(function () {
 
     for (var i = 0; i < imagenes.length; i++) {
         ///verificamos si es null o no 
+        
         if (imagenes[i]) {
             // Hijos adentro de la raiz
+
             var ref = storageRef.child((i + 1) + '.jpg');
             ref.putString(imagenes[i], 'data_url').then(function (snapshot) {
+
                 console.log('Uploaded a data_url string! ' + i);
+                
+
             });
             ref.getDownloadURL().then(function (url) {
-                AgregarImagenes(url);
+                document.getElementById("list").innerHTML = `<li id="${url}"></li>`;
+                var lis = document.getElementById("imagesURL").getElementsByTagName("li");
+                datas.push(lis[0].id);
             }).catch(function (error) {
             });
-        } else {
-            console.log("imagen " + (i + 1) + " no ingresada");
         }
-    }
-    ///Api fetch
+        
+        
 
-    ///EnviarDatos();
+    }
+
+   
+   setInterval(EnviarDatos,5000);
 
 });
 
-///variable para guardar urls de imagenes
-var Urls = [];
-///Funcion para agragar las urls a nuestro array
-function AgregarImagenes(url) {
-    Urls.push(url);
-    console.log(Urls[0]);
-}
-
 function EnviarDatos() {
     var Titulo = document.getElementById("colFormLabelLg").value;
-    fetch("http://localhost:38258/VendeYa/PublicarArticulo?titulo=" + Titulo + "&precio=" + price.value + "&descripcion=" +
-            desc.value + "&idsubcategoria=" + idCategoria + "&location=" + locationUser + "&fotos[]=" + Urls[0] +
-            "&fotos[]=" + Urls[1] + "&fotos[]=" + Urls[2] + "&fotos[]=" + Urls[3] + "&fotos[]=" + Urls[4] + "&fotos[]=" + Urls[5]).then(function (res) {
+
+
+    fetch("http://localhost:8080/VendeYa/PublicarArticulo?titulo=" + Titulo + "&precio=" + price.value + "&descripcion=" +
+            desc.value + "&idsubcategoria=" + idCategoria + "&location=" + locationUser + "&fotos[]=" + datas[0] +
+            "&fotos[]=" + datas[1] + "&fotos[]=" + datas[2] + "&fotos[]=" + datas[3] + "&fotos[]=" + datas[4]+ "&fotos[]=" + datas[5]).then(function (res) {
         return res.text();
     }).then(function (data) {
-        /*if (data == "true") {
-         location.href = "http://localhost:38258/VendeYa";
-         } else {
-         document.getElementById("mensaje").innerHTML = "Datos incorrectos o no se encontro la cuenta";
-         }*/
-        location.href = "http://localhost:38258/VendeYa/PublicarArticulo?titulo=" + Titulo + "&precio=" + price.value + "&descripcion=" +
-                desc.value + "&idsubcategoria=" + idCategoria + "&location=" + locationUser + "&fotos[]=" + Urls[0] +
-                "&fotos[]=" + Urls[1] + "&fotos[]=" + Urls[2] + "&fotos[]=" + Urls[3] + "&fotos[]=" + Urls[4] + "&fotos[]=" + Urls[5];
+
+          
+        location.href = "http://localhost:8080/VendeYa/Profile/";
     });
 }
+
+
+
+
+
+
 
 
 

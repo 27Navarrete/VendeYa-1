@@ -80,8 +80,8 @@ public class Articulo {
     /**
      * @param imagesList the imagesList to set
      */
-    public void setImagesList(String image) {
-        this.imagesList.add(image);
+    public void setImagesList(ArrayList<String> image) {
+        this.imagesList = image;
     }
     private int idArticulo;
     private String nombre;

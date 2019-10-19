@@ -16,5 +16,5 @@ public interface ArticuloCRUD {
     public ArrayList<Articulo> LeerArticulos();
     public void ActualizarArticulo(Articulo articulo);
     public void InsertarArticulo(Articulo articulo);
-    public void insertarArticuloImages(int id, String imagen);
+    public void insertarArticuloImages(int id,String imagen);
 }

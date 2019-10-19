@@ -19,9 +19,10 @@ import java.util.logging.Logger;
  * @author cnk
  */
 public class ArticuloDAO implements ArticuloCRUD {
+
     private Database database;
-    
-    public ArticuloDAO(){
+
+    public ArticuloDAO() {
         this.database = new Database();
     }
 
@@ -30,19 +31,17 @@ public class ArticuloDAO implements ArticuloCRUD {
         ResultSet rs = null;
         CategoriaDAO ctD = new CategoriaDAO();
         Articulo ar = new Articulo();
-        
+
         try {
-            rs = this.database.excuteQuery("select * from Productos where nombre='"+articulo.getNombre()+"' and precio="+articulo.getPrecio());
-            
-            while(rs.next()){
+            rs = this.database.excuteQuery("select * from Productos where nombre='" + articulo.getNombre() + "' and precio=" + articulo.getPrecio());
+            while (rs.next()) {
                 ar.setIdArticulo(rs.getInt("idProducto"));
                 ar.setNombre(rs.getString("nombre"));
                 ar.setPrecio(rs.getInt("precio"));
                 SubCategoria sb = ctD.leerSubCategoria(rs.getInt("idsubCategoria"));
                 ar.setSubCategoria(sb);
             }
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,9 +62,9 @@ public class ArticuloDAO implements ArticuloCRUD {
     public void InsertarArticulo(Articulo articulo) {
         try {
             this.database.excuteUpdate("insert into Productos(nombre,precio,idSubCategoria) values "
-                    + "('"+articulo.getNombre()+"', "+articulo.getPrecio()+","
-                            + ""+articulo.getSubCategoria().getIdCat()+")");
-            
+                    + "('" + articulo.getNombre() + "', " + articulo.getPrecio() + ","
+                    + "" + articulo.getSubCategoria().getIdCat() + ")");
+
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -75,10 +74,11 @@ public class ArticuloDAO implements ArticuloCRUD {
     public void insertarArticuloImages(int id, String imagen) {
         try {
             this.database.excuteUpdate("insert into Productos_Imagenes(idProducto,Imagen) values"
-                    + "("+id+",'"+imagen+"')");
+                    + "(" + id + ",'" + imagen + "')");
+
         } catch (SQLException ex) {
             Logger.getLogger(ArticuloDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
 }

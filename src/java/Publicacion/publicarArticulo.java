@@ -32,13 +32,17 @@ public class publicarArticulo {
         this.posDao = new PublicacionDAO();
     }
     
+    public void setArrayListImages(ArrayList<String> ar){
+        this.images = ar;
+    }
+    
     public void CrearArticulo(){
         Articulo ar = new Articulo(); 
         this.articuloDao.InsertarArticulo(this.publicacion.getArticulo());
         ar = this.articuloDao.LeerArticulo(this.publicacion.getArticulo());
         this.articulo.setIdArticulo(ar.getIdArticulo());
         for(int i=0;i<this.images.size();i++){
-            this.articuloDao.insertarArticuloImages(this.articulo.getIdArticulo(), images.get(i));
+            this.articuloDao.insertarArticuloImages(this.articulo.getIdArticulo(), this.images.get(i));
         }
     }
     

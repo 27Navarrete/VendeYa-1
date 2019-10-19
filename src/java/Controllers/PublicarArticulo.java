@@ -14,6 +14,7 @@ import Publicacion.publicarArticulo;
 import Usuario.Usuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -42,16 +43,23 @@ public class PublicarArticulo extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String[] images = {"a","b"};
-            String title = "Vendo Celular";
-            Double precio = 350.00;
-            String descripcion = "Vendo Bicicleta marca x";
-            int categoria = 12;
-            String ubicacion = "Sonzacate,Sonsonate";
+            String[] images = request.getParameterValues("fotos[]");
+            ArrayList<String> arrayImages = new ArrayList<>();
+            String title = request.getParameter("titulo");
+            Double precio = Double.parseDouble(request.getParameter("precio"));
+            String descripcion = request.getParameter("descripcion");
+            int categoria = Integer.parseInt(request.getParameter("idsubcategoria"));
+            String ubicacion = request.getParameter("location");
             
             Articulo ar = new Articulo();
-            ar.setImagesList(images[0]);
-            ar.setImagesList(images[1]);
+            for(int i=0;i<images.length;i++){
+                if(!images[i].equals("undefined")){
+                    arrayImages.add(images[i]);
+                }
+            }
+            
+            ar.setImagesList(arrayImages);
+            
             ar.setNombre(title);
             ar.setPrecio(precio);
             SubCategoria su = new SubCategoria();
@@ -63,7 +71,6 @@ public class PublicarArticulo extends HttpServlet {
             HttpSession session=request.getSession(false);
             
             int id = (int) session.getAttribute("idUsuario");
-            
             pos.setArticulo(ar);
             Usuario user = new Usuario();
             user.setIdUsuario(id);
@@ -78,19 +85,12 @@ public class PublicarArticulo extends HttpServlet {
             pos.setUbicacion(ubicacion);
             
             publicarArticulo pa = new publicarArticulo(pos);
+            pa.setArrayListImages(arrayImages);
             pa.CrearArticulo();
             pa.CrearPublicacion();
 
             
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PublicarArticulo "+ct2.getIdCuenta()+"</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PublicarArticulo at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+            
         }
     }
 
